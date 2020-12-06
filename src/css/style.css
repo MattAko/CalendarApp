@@ -1,0 +1,187 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Oswald', 'Roboto', sans-serif;
+}
+
+.container{
+    margin: auto;
+    width: 90%;
+    background-color: white;
+    padding-bottom: 20px;
+}
+
+.changeWeekButton{
+    font-size: 30px;
+    border: none;
+    background-color: white;
+}
+
+.changeWeekButton:hover{
+    cursor: pointer;
+}
+
+header{
+    display: flex;
+}
+
+#displayWeekNumber{
+    text-align: center;
+    display: flex;
+    margin: 20px;
+}
+
+#displayWeekNumber p{
+    align-self: center;
+}
+
+#displayWeekNumber p{
+    cursor: pointer;
+}
+
+.counter{
+    margin: 0 20px 0 20px;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 7px;
+    margin: 0 5px 0 5px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+#month{
+    align-self: center;
+    padding: 0 0% 0 3%;
+    font-size: 48px;
+}
+
+#calendar-grid{
+    display: grid;
+    grid-template-columns: 60px repeat(7, auto);
+    grid-auto-rows: minmax(40px, auto);
+}
+
+.time-slot{
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+}
+
+.weekdayName{
+    font-size: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0px;
+    border-bottom: solid black 1px;
+    z-index: 2;
+    background-color: white;
+}
+
+.currentDay{
+    color: white;
+    background-color: lightblue;
+}
+
+.time-divider{
+    position: relative;
+    bottom: -30px;
+    padding: 0 8px 0 5px;
+    text-align: right;
+}
+
+#overlay{
+    z-index: 2;
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0%;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    animation: fadeIn 0.3s forwards;
+}
+
+#addEventForm{
+    z-index: 3;
+    position: fixed;
+    color: red;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 40%;
+    height: 45%;
+    text-align: center;
+    padding: 20px;
+}
+
+@keyframes fadeIn{
+    0% {
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+svg{
+    width: 50px;
+    height: 50px;
+    display: block;
+    position: fixed;
+    z-index: 3;
+    bottom: 20px;
+    right: 30px;
+    padding: 10px;
+    fill: black;
+    border-radius: 45%;
+    z-index: 3;
+    box-shadow: 0 0 5px #ccc;
+}
+
+svg:hover{
+    cursor: pointer;
+    fill: red;
+    animation: changeColor 1s forwards;
+}
+
+@keyframes changeColor {
+    from {fill: black;}
+    to {fill: lightblue;}
+}
+
+.close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+}
+.close:hover {
+    opacity: 1;
+}
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+.close:before {
+    transform: rotate(45deg);
+}
+.close:after {
+    transform: rotate(-45deg);
+}
