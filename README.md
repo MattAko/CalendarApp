@@ -2,8 +2,8 @@
 
 ## Preview
 ![Preview](preview.png)
-![Create Event Form](create-event.png)
-![Edit Event Form](edit-event.png)
+![Create Event Form](create-event.PNG)
+![Edit Event Form](edit-event.PNG)
 
 ## Tools/Tech Used
 - Pure and simple HTML, CSS, and JavaScript
