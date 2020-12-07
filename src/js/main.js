@@ -1,3 +1,8 @@
+/*
+    This JS file is responsible with handling dates
+    Written by: Matthew Roberts
+*/
+
 /*  
     This is the main function that loads the calendar
     -Fill the calender grid with elements for each time-slot
@@ -79,8 +84,9 @@ function setupDateNumbers(curr){
 function updateDates(){
     dayoftheweek = globalDate.getDay();
     d = new Date(); // counter to iterate through days of the week
+    d.setMonth(globalDate.getMonth());
     d.setDate(globalDate.getDate() - dayoftheweek);
-    
+
     var week = document.getElementsByClassName('weekdayName'); //Array of the weekdays
     for(var i = 1; i < 8; i++){
         week[i].children[0].innerText = d.getDate();
@@ -88,7 +94,6 @@ function updateDates(){
             week[i].classList.remove('currentDay')
         }
         if(d.getMonth() === currentDate.getMonth() && d.getDate() === currentDate.getDate()){
-            console.log('test');
             week[i].classList.add('currentDay')
         }
         d.setDate(d.getDate() + 1);
@@ -139,7 +144,10 @@ function displayMonth(){
     var week = document.getElementsByClassName('weekdayName');
     if(parseInt(week[1].children[0].innerText) > parseInt(week[7].children[0].innerText)){
         // the month is a range
-        document.getElementById('month').innerText = months[globalDate.getMonth()] + '-' + months[globalDate.getMonth()+1];
+        var firstIndex = globalDate.getMonth();
+        var secondIndex = 0;
+        globalDate.getMonth()+1 > 11 ? secondIndex = 0 : secondIndex = globalDate.getMonth()+1
+        document.getElementById('month').innerText =  months[firstIndex] + '-' + months[secondIndex];
     }
     else{
         document.getElementById('month').innerText = months[globalDate.getMonth()];
@@ -170,42 +178,6 @@ function decWeek(){
     document.getElementById('weekNumber').innerText = currentWeek;
 }
 
-
-/* 
-    Show the Add Events Form, this is a toggle
-*/
-function showAddEventForm(){
-    document.getElementById('overlay').style.display==='block' ? hideForm() : showForm();
-
-}
-function hideForm(){
-    var overlay = document.getElementById('overlay');
-    overlay.style.display = 'none'
-    var form = document.getElementById('addEventForm');
-    form.parentNode.removeChild(form);
-}
-
-function showForm(){
-    var overlay = document.getElementById('overlay');
-    var container = document.getElementsByClassName('container')[0];
-
-    // Create test label
-    overlay.style.display = 'block'
-    var form = document.createElement('form');
-    form.id = 'addEventForm';
-    var label = document.createElement('label');
-    label.textContent = 'test-label';
-    form.appendChild(label);
-
-    // Create exit button
-    var exitFormButton = document.createElement('a');
-    exitFormButton.setAttribute( "onClick", "javascript: hideForm();" );
-    exitFormButton.href = '#';
-    exitFormButton.classList.add('close');
-    form.appendChild(exitFormButton);
-    
-    container.appendChild(form);
-}
 
 /*
     Useful global variables

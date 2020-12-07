@@ -111,20 +111,6 @@ header{
     animation: fadeIn 0.3s forwards;
 }
 
-#addEventForm{
-    z-index: 3;
-    position: fixed;
-    color: red;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    width: 40%;
-    height: 45%;
-    text-align: center;
-    padding: 20px;
-}
-
 @keyframes fadeIn{
     0% {
         opacity: 0%;
@@ -184,4 +170,57 @@ svg:hover{
 }
 .close:after {
     transform: rotate(-45deg);
+}
+
+#addEventForm{
+    z-index: 3;
+    position: fixed;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 35%;
+    padding: 20px 40px 60px 40px;
+}
+
+#addEventForm label{
+    display: inline-block;
+    
+}
+
+#eventNameInput{
+    width: 80%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgb(75, 72, 72);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#startTime{
+}
+
+#eventDate{
+    border: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    display: inline-block;
+    border: none;
+    border-bottom: 1px solid rgb(75, 72, 72);
+    font-size: 16px;
+}
+
+#submitEvent{
+    background-color: lightgreen;
+    border: none;
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 20px;
+    text-transform: uppercase;
 }
