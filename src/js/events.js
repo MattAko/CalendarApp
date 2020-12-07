@@ -221,8 +221,8 @@ function validateEventForm(e){
     Add event to data
 */
 function createEvent(formData){
-    if(counter===0 && events.id[0]===null){
-        events.id.push(counter);
+    if(events.id.length === 0){
+        events.id.push(0);
         counter++;
     }
     else{
