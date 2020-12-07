@@ -49,8 +49,9 @@
         <label for="editEndTime">End Time: </label>
         <select id="editEndTime"></select>
         <br>
-        <input type="submit" value='Edit Event' id='editEventButton' class='greenButton'>
-        <input type="submit" value='Delete Event' id='delEventButton' class='redButton'>
+        <input type="text" id='eventID'>
+        <input type="submit" value='Edit Event' id='editEventButton' class='greenButton' onclick="submitEdit(event)">
+        <input type="submit" value='Delete Event' id='delEventButton' class='redButton' onclick="deleteEvent(event)">
     </form>
     
     <!-- Add Event Button -->

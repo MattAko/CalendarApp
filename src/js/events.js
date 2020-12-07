@@ -7,7 +7,6 @@
     Written by: Matthew Roberts
 */
 
-
 /*
     Global event data to store events
 */
@@ -181,7 +180,6 @@ function validateEventForm(e){
     // Otherwise, notify user to fix issues.
     if(complete){
         console.log('Form was filled out successfully!');
-        console.log(date);
         var mon = parseInt(date.substr(5,2));
         var year = parseInt(date.substr(0,4));
         date = parseInt(date.substr(8,2));
@@ -197,7 +195,6 @@ function validateEventForm(e){
     Add event to data
 */
 function createEvent(formData){
-    console.log(formData);
     events.id.push(counter);
     counter++;
 
@@ -227,25 +224,21 @@ function displayEvents(){
     var i = 0;
     var dayoftheweek = 0;
     // Check if date and month are the same
-    console.log(calendar);
     
     for(i = 0; i<events.id.length; i++){
         var validDate = parseInt(week[1].children[0].innerText) <= events.date[i] && parseInt(week[7].children[0].innerText) >= events.date[i];
         //check if 
         if(validDate){
             dayoftheweek = events.date[i] - parseInt(week[1].children[0].innerText);
-            console.log('event is in this week');
             
             // Fill the slots based on the event time
             var j = 0;
             var duration = events.end[i] - events.start[i];
-            console.log('this is the duration ' + duration);
             
             time_slots[dayoftheweek+events.start[i]*7].innerText = events.name[i];
             for(j = 0; j < duration; j++){
                 time_slots[dayoftheweek+(j*7)+events.start[i]*7].classList.add('filled-slot');
                 time_slots[dayoftheweek+(j*7)+events.start[i]*7].value = events.id[i];
-                console.log(time_slots[dayoftheweek+(j*7)+events.start[i]*7].value);
             }
         }
     }
@@ -314,7 +307,66 @@ function editEvent(e){
         // Load the event name
         var index = events.id.indexOf(id)
         document.getElementById('editEventName').value = events.name[index];
+
+        // Load the event date 
+        var year = events.year[index];
+        var month = events.month[index];
+        var day = events.date[index];
+        if(day<10){
+            day = '0' + events.date[index];
+        }
+        var inputDate = year + '-' + month + '-' + day;
+        console.log(inputDate);
+
+        document.getElementById('editEventDate').value = inputDate;
+        console.log(document.getElementById('editEventDate').value);
+        
+
+        // Load the start time and end time
+        document.getElementById('editStartTime').value = events.start[index];
+        document.getElementById('editEndTime').value = events.end[index];
+
+        document.getElementById('eventID').value = index;
     }
+}
+
+function deleteEvent(e){
+    e.preventDefault();
+    var index = e.target.form[4].value
+
+
+    // remove each element of the specific event
+    events.name.splice(index,1);
+    events.date.splice(index,1);
+    events.month.splice(index,1);
+    events.year.splice(index,1);
+    events.start.splice(index,1);
+    events.end.splice(index,1);
+    events.id.splice(index,1);
+
+    console.log(events);
+    displayEvents();
+    closeEditForm();
+}
+
+function submitEdit(e){
+    e.preventDefault();
+    console.log(e);
+    var index = e.target.form[4].value
+    
+    var mon = parseInt(e.target.form[1].value.substr(5,2));
+    var year = parseInt(e.target.form[1].value.substr(0,4));
+    var date = parseInt(e.target.form[1].value.substr(8,2));
+
+    events.name[index] = e.target.form[0].value //event name
+    events.date[index] = date  //event date
+    events.month[index] = mon   //event month
+    events.year[index] = year //event year
+    events.start[index] = e.target.form[2].value //event start time
+    events.end[index] = e.target.form[3].value //event end time
+    
+    displayEvents();
+    closeEditForm();
 }
 
 /*
