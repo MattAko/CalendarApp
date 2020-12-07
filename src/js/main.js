@@ -3,6 +3,7 @@
     Written by: Matthew Roberts
 */
 
+
 /*  
     This is the main function that loads the calendar
     -Fill the calender grid with elements for each time-slot
@@ -21,6 +22,9 @@ function fillGrid(){
             time_slot.innerText = formatAMPM(timer);
             counter += 1;
             timer.setHours(counter);
+        }
+        else if(i<8){
+            time_slot.classList.add('first-row');
         }
         else{
             time_slot.classList.add('time-slot');
@@ -166,7 +170,7 @@ function incWeek(){
     displayMonth();
     currentWeek===52 ? currentWeek = 0 : currentWeek++;
     document.getElementById('weekNumber').innerText = currentWeek;
-    
+    displayEvents()
 }
 function decWeek(){
     // decrement the global date
@@ -176,6 +180,7 @@ function decWeek(){
     displayMonth();
     currentWeek===0 ? currentWeek = 52 : currentWeek--;
     document.getElementById('weekNumber').innerText = currentWeek;
+    displayEvents()
 }
 
 
@@ -188,7 +193,6 @@ globalDate = new Date();
 globalDate.getDay();
 currentDate = new Date();
 currentDate.getDay();
-console.log(currentDate);
 
 /*
     Run the functions
