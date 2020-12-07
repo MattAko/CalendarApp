@@ -322,3 +322,10 @@ select:hover{
 .redButton:hover{
     cursor: pointer;
 }
+
+.errorMsg{
+    background-color: red;
+    color: black;
+    width: auto;
+    margin: 5px 0 5px 0;
+}

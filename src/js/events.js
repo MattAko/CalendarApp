@@ -10,7 +10,7 @@
 /*
     Global event data to store events
 */
-events = {
+events = (localStorage.getItem('eventList')) ? JSON.parse(localStorage.getItem('eventList')): {
     id: [],
     name: [],
     date: [],
@@ -20,7 +20,12 @@ events = {
     end: []
 }
 
+function eventsObjectUpdated() {
+    localStorage.setItem('eventList', JSON.stringify(events));
+}
+
 var counter = 0;    //Used for IDs
+displayEvents();
 
 /* 
     Show the Add Events Form, this is a toggle
@@ -153,14 +158,27 @@ function validateEventForm(e){
     var complete = true;
     var name = e.target[0].value;
     var date = e.target[1].value;
-    
+    var form = document.getElementById('addEventForm')
+
+    document.querySelectorAll('.errorMsg').forEach(function(a) {
+        a.remove()
+    })
+
     // Check if the form is filled out correctly
     if(!name){
-        alert('Please add an event name')
+        var nameError = document.createElement('p');
+        nameError.textContent = 'Please add an event name';
+        nameError.classList.add('errorMsg');
+        form.appendChild(nameError);
+        //alert('Please add an event name')
         complete = false;
     }
     if(!date){
-        alert('Please add an event date');
+        var dateError = document.createElement('p');
+        dateError.textContent = 'Please add an event date';
+        dateError.classList.add('errorMsg');
+        form.appendChild(dateError);
+        //alert('Please add an event date');
         complete = false;
     }
 
@@ -168,11 +186,19 @@ function validateEventForm(e){
     var end = parseInt(e.target[3].value);
     // Validate the start and end times
     if(start > end){
-        alert('Please make sure that the start time is before the end time.');
+        //alert('Please make sure that the start time is before the end time.');
+        var timeError = document.createElement('p');
+        timeError.textContent = 'Please make sure that the start time is before the end time.';
+        timeError.classList.add('errorMsg');
+        form.appendChild(timeError);
         complete = false;
     }
     else if(start === end){
-        alert('Your start and end times are the same.');
+        var timeError = document.createElement('p');
+        timeError.textContent = 'Your start and end times are the same.';
+        form.appendChild(timeError);
+        timeError.classList.add('errorMsg');
+        //alert('Your start and end times are the same.');
         complete = false;
     }
 
@@ -209,6 +235,7 @@ function createEvent(formData){
     // Update what events are being displayed
     displayEvents();
     hideForm();
+    eventsObjectUpdated();
 }
 
 
@@ -223,12 +250,14 @@ function displayEvents(){
     var time_slots = document.getElementsByClassName('time-slot');
     var i = 0;
     var dayoftheweek = 0;
+
     // Check if date and month are the same
-    
     for(i = 0; i<events.id.length; i++){
         var validDate = parseInt(week[1].children[0].innerText) <= events.date[i] && parseInt(week[7].children[0].innerText) >= events.date[i];
-        //check if 
-        if(validDate){
+
+        var validMonth = events.month[i] === globalDate.getMonth()+1;
+        console.log(validMonth);
+        if(validDate && validMonth){
             dayoftheweek = events.date[i] - parseInt(week[1].children[0].innerText);
             
             // Fill the slots based on the event time
@@ -242,8 +271,6 @@ function displayEvents(){
             }
         }
     }
-    
-    console.log(events);
 }
 
 /*
@@ -316,11 +343,7 @@ function editEvent(e){
             day = '0' + events.date[index];
         }
         var inputDate = year + '-' + month + '-' + day;
-        console.log(inputDate);
-
         document.getElementById('editEventDate').value = inputDate;
-        console.log(document.getElementById('editEventDate').value);
-        
 
         // Load the start time and end time
         document.getElementById('editStartTime').value = events.start[index];
@@ -330,6 +353,10 @@ function editEvent(e){
     }
 }
 
+
+/*
+    Delete a specific event from events object
+*/
 function deleteEvent(e){
     e.preventDefault();
     var index = e.target.form[4].value
@@ -347,8 +374,13 @@ function deleteEvent(e){
     console.log(events);
     displayEvents();
     closeEditForm();
+    eventsObjectUpdated();
 }
 
+
+/*
+    Get 'Edit Form' data, modify existing events object using index
+*/
 function submitEdit(e){
     e.preventDefault();
     console.log(e);
@@ -367,6 +399,7 @@ function submitEdit(e){
     
     displayEvents();
     closeEditForm();
+    eventsObjectUpdated();
 }
 
 /*
