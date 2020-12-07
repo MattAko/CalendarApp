@@ -17,6 +17,7 @@ function fillGrid(){
     var counter = 1;
     for(var i = 0; i < 200; i++){
         var time_slot = document.createElement('div');
+        time_slot.setAttribute('onClick', "javascript: editEvent(event);")
         if(i%8===0 && i!==0){
             time_slot.classList.add('time-divider');
             time_slot.innerText = formatAMPM(timer);

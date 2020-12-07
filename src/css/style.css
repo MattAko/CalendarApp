@@ -203,7 +203,11 @@ svg:hover{
     
 }
 
-#eventNameInput{
+.eventFormLabel{
+    display: inline-block;
+}
+
+.inputText{
     width: 80%;
     display: block;
     border: none;
@@ -217,6 +221,10 @@ svg:hover{
 
 #eventDate{
     border: none;
+}
+
+#editEventDate{
+    border:none;
 }
 
 select {
@@ -256,4 +264,57 @@ select:hover{
     z-index: 2;
     border-top: none;
     border-bottom: none;
+    padding: 5px 0 0 5px;
+}
+
+#editForm{
+
+    z-index: 8;
+    position: fixed;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100vh);
+    background-color: white;
+    width: 300px;
+    padding: 20px 40px 40px 40px;
+    
+}
+
+@keyframes fallIn{
+    0% {
+        transform: translate(-50%, -100vh)
+    }
+    80%{
+        transform: translate(-50%, -20%)
+    }
+    100%{
+        transform: translate(-50%, -50%)
+    }
+}
+
+.greenButton{
+    background-color: lightgreen;
+    border: none;
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.greenButton:hover{
+    cursor: pointer;
+}
+
+.redButton{
+    background-color: red;
+    border: none;
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.redButton:hover{
+    cursor: pointer;
 }

@@ -8,6 +8,21 @@
 */
 
 
+/*
+    Global event data to store events
+*/
+events = {
+    id: [],
+    name: [],
+    date: [],
+    month: [],
+    year: [],
+    start: [],
+    end: []
+}
+
+var counter = 0;    //Used for IDs
+
 /* 
     Show the Add Events Form, this is a toggle
 */
@@ -22,6 +37,10 @@ function hideForm(){
     form.parentNode.removeChild(form);
 }
 
+/*
+    Display the form for adding events
+    **Will most likely convert to this HTML and just edit the display...**
+*/
 function showForm(){
     var overlay = document.getElementById('overlay');
     var container = document.getElementsByClassName('container')[0];
@@ -31,6 +50,7 @@ function showForm(){
     // Create form
     var form = document.createElement('form');
     form.id = 'addEventForm';
+
     form.setAttribute('onSubmit', 'javascript: validateEventForm(event);');
     
 
@@ -46,6 +66,7 @@ function showForm(){
     eventNameInput.type = 'text';
     eventNameInput.placeholder = 'Event Name';
     eventNameInput.id = 'eventNameInput';
+    eventNameInput.classList.add('inputText');
     form.appendChild(eventNameInput);
 
     // label and input for event date
@@ -124,6 +145,10 @@ function showForm(){
     container.appendChild(form);
 }
 
+/*
+    Validate the input for the form data
+    This calls createEvent() if the form is filled out correctly
+*/
 function validateEventForm(e){
     e.preventDefault();
     var complete = true;
@@ -186,6 +211,7 @@ function createEvent(formData){
 
     // Update what events are being displayed
     displayEvents();
+    hideForm();
 }
 
 
@@ -218,6 +244,8 @@ function displayEvents(){
             time_slots[dayoftheweek+events.start[i]*7].innerText = events.name[i];
             for(j = 0; j < duration; j++){
                 time_slots[dayoftheweek+(j*7)+events.start[i]*7].classList.add('filled-slot');
+                time_slots[dayoftheweek+(j*7)+events.start[i]*7].value = events.id[i];
+                console.log(time_slots[dayoftheweek+(j*7)+events.start[i]*7].value);
             }
         }
     }
@@ -225,26 +253,77 @@ function displayEvents(){
     console.log(events);
 }
 
+/*
+    Clear the grid whenever the week is changed
+*/
 function clearGrid(){
     var time_slots = document.getElementsByClassName('time-slot');
     var i = 0;
     for(i=0; i < time_slots.length; i++){
         time_slots[i].classList.remove('filled-slot');
         time_slots[i].innerText = ''
+        time_slots[i].value = undefined;
     }
 }
 
 /*
-    Global event data to store events
+    Edit event form
 */
-events = {
-    id: [],
-    name: [],
-    date: [],
-    month: [],
-    year: [],
-    start: [],
-    end: []
+function editEvent(e){
+    e.preventDefault();
+
+    id = e.target.value;
+    if(Number.isInteger(id)){
+        // Animation for edit form dropping down
+        var editForm = document.getElementById('editForm');
+        var overlay = document.getElementById('overlay');
+        overlay.style.display = 'block';
+        editForm.style.display = 'block';
+        editForm.style.transform = 'translate(-50%, -50%)';
+        editForm.style.animation =  'fallIn forwards 0.7s';
+
+
+        var startTime = document.getElementById('editStartTime');
+        var endTime = document.getElementById('editEndTime');
+        var i = 0;
+        var time = 12;
+        var ext = 'am';
+        for(i = 0; i<24; i++){
+            i > 11 ? ext = 'pm' : ext = 'am';
+            i < 12 ? time = i : time = i - 12;
+            time === 0 ? time = 12 : time = time; 
+            var timeOption = document.createElement('option');
+            timeOption.value = i;
+            timeOption.innerText = time + ext;
+            startTime.appendChild(timeOption);
+        }
+
+        var i = 0;
+        var time = 12;
+        var ext = 'am';
+        for(i = 0; i<24; i++){
+            i > 11 ? ext = 'pm' : ext = 'am';
+            i < 12 ? time = i : time = i - 12;
+            time === 0 ? time = 12 : time = time; 
+            var timeOption = document.createElement('option');
+            timeOption.value = i;
+            timeOption.innerText = time + ext;
+            endTime.appendChild(timeOption);
+        }
+
+        // Load the event name
+        var index = events.id.indexOf(id)
+        document.getElementById('editEventName').value = events.name[index];
+    }
 }
 
-var counter = 0;
+/*
+    Close edit form
+*/
+function closeEditForm(){
+    var editForm = document.getElementById('editForm');
+    editForm.style.display = 'none';
+    var overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+}
+
