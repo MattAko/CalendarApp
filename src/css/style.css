@@ -314,9 +314,11 @@ select:hover{
     background-color: red;
     border: none;
     padding: 10px;
+    margin-left: 40%;
     border: 1px solid black;
     margin-top: 20px;
     text-transform: uppercase;
+
 }
 
 .redButton:hover{

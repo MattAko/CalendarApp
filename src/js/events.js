@@ -221,8 +221,17 @@ function validateEventForm(e){
     Add event to data
 */
 function createEvent(formData){
-    events.id.push(counter);
-    counter++;
+    if(counter===0 && events.id[0]===null){
+        events.id.push(counter);
+        counter++;
+    }
+    else{
+        console.log('Math max is ' + Math.max(...events.id));
+        counter = Math.max(...events.id)+1;
+        events.id.push(counter);
+    }
+
+    console.log(counter);
 
     events.name.push(formData[0]);
     events.date.push(formData[1]);
@@ -256,7 +265,6 @@ function displayEvents(){
         var validDate = parseInt(week[1].children[0].innerText) <= events.date[i] && parseInt(week[7].children[0].innerText) >= events.date[i];
 
         var validMonth = events.month[i] === globalDate.getMonth()+1;
-        console.log(validMonth);
         if(validDate && validMonth){
             dayoftheweek = events.date[i] - parseInt(week[1].children[0].innerText);
             
@@ -293,6 +301,7 @@ function editEvent(e){
     e.preventDefault();
 
     id = e.target.value;
+    console.log
     if(Number.isInteger(id)){
         // Animation for edit form dropping down
         var editForm = document.getElementById('editForm');
@@ -384,6 +393,7 @@ function deleteEvent(e){
 function submitEdit(e){
     e.preventDefault();
     console.log(e);
+    console.log(index);
     var index = e.target.form[4].value
     
     var mon = parseInt(e.target.form[1].value.substr(5,2));
